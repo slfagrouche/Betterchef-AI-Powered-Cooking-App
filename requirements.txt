@@ -1,0 +1,13 @@
+gradio
+icecream
+pymongo
+requests
+google-api-python-client
+openai
+Pillow
+python-dotenv
+langchain 
+langchain-mongodb 
+langchain-openai   
+pypdf 
+tiktoken 

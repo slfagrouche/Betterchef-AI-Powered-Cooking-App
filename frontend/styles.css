@@ -1,0 +1,60 @@
+body {
+    background-color: #f0f0f5;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #444;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.gradio-container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    max-width: 800px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.gradio-container .input {
+    padding: 10px;
+}
+
+.gradio-container .output {
+    padding: 10px;
+}
+
+.gradio-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.gradio-button:hover {
+    background-color: #0056b3;
+}
+
+.gradio-html iframe {
+    border-radius: 8px;
+}
+
+.gradio-textbox {
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}

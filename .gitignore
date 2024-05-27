@@ -1,0 +1,8 @@
+__pycache__/
+.vscode/
+.env
+
+
+# Exclude dataset directories
+data/raw/
+data/processed/
