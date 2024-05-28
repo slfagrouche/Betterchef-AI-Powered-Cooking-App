@@ -18,10 +18,10 @@
 Welcome to BetterChef, your AI-powered cooking assistant! Our app is designed to revolutionize the way you cook by providing instant access to a wealth of recipes, cooking techniques, and personalized culinary advice.
 
 ## Problem Statement
-Finding reliable and comprehensive cooking advice can be challenging. Traditional search engines and recipe websites often return inconsistent results, making it difficult for users to find accurate and relevant information quickly. BetterChef solves this problem by leveraging advanced AI to deliver precise, sourced culinary guidance tailored to your needs.
+Have you ever seen a delicious dish or food item and wondered how to make it? Or perhaps you have a list of ingredients but don't know what to cook? Finding reliable and comprehensive cooking advice can be challenging. Traditional search engines and recipe websites often return inconsistent results, making it difficult for users to find accurate and relevant information quickly. BetterChef solves these problems by allowing you to simply snap a picture of the dish or input a list of ingredients, and it leverages advanced AI to deliver precise, sourced culinary guidance tailored to your needs.
 
 ## Features
-- **Extensive Recipe Database:** Scraped data from Wikibook of over 12MB or 3000+ recipes for accurate retrieval and suggestions.
+- **Extensive Recipe Database:** Scraped data from Wikibook of over 4.6 GB or +400000 recipes for accurate retrieval and suggestions.
 - **Specialized Interface:** Designed specifically for culinary tasks, allowing users to explore recipes, cooking techniques, and receive dish suggestions.
 - **Multimedia Interaction:** Supports image uploads for dish recognition and provides video tutorials related to cooking at a click.
 - **Retrieval-Augmented Generation (RAG):** Uses RAG to ensure accurate and relevant cooking advice by retrieving information from a curated dataset.

@@ -10,11 +10,9 @@ from googleapiclient.discovery import build
 from database import *
 import getpass
 import gradio as gr
-
 import os
 import pprint
 import sys
-
 from gradio.themes.base import Base
 from icecream import ic
 from langchain.callbacks.tracers import ConsoleCallbackHandler
@@ -32,7 +30,7 @@ from langchain.document_loaders import TextLoader
 from data_managment import load_and_process_documents
 import os
 from config import OPENAI_API_KEY, YOUTUBE_DATA_API, MONGO_URI
-
+from policy import policy
 
 
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -41,37 +39,28 @@ documents = load_and_process_documents()
 vector_search = db_manager.setup_vector_search(documents)
 retriever = db_manager.get_retriever(vector_search)
 
-policy = """
-Do not allow any unsafe or unethical query according to the OpenAI guidelines.
-"""
-
 
 def check_incoming_query(query, policy=policy):
     """
     Checks if the requested query falls under any unsafe content categories according to the defined policy.
     """
-
-    # Format the task description and instructions for safety assessment
-    # Format the task description and instructions for safety assessment
     task_description = f"Task: Determine whether the following query complies with our safety policy. "\
-                       "If the query is about food, culinary items or related (while cooking or process ) then it is SAFE. "\
+                       "If the query is about food, culinary items or related (while cooking or process) then it is SAFE. "\
                        f"Query to assess:\n---\n{query}\n---"
-
+    
     output_instructions = """
     Instructions for safety assessment:
     - Begin with 'SAFE' or 'UNSAFE'. Use 'UNSAFE' only if the query definitely falls into any of the unsafe content categories.
     - If 'UNSAFE', list the violated category names on a new line, separated by commas.
     """
-
-
-    # Combine the task description, policy information, and output instructions into a single prompt
-    prompt = f"{task_description}{policy}{output_instructions}"
-
+    
+    prompt = f"{task_description}\n{policy}\n{output_instructions}"
+    
     response = client.completions.create(
-      model="gpt-3.5-turbo-instruct",
-      prompt=prompt,
-      max_tokens=3000,
-      user="user_123456"
+        model="gpt-3.5-turbo-instruct",
+        prompt=prompt,
+        max_tokens=3000,
+        user="user_123456"
     )
     return response
 
@@ -138,16 +127,17 @@ def get_dish_suggestions(image):
 def search_youtube_videos(dish_name): #FIXME: when user type in unvalid dish_name
     """Search for YouTube cooking videos."""
     # Safety check of the incoming question
-    # llm_response = check_incoming_query(f"How to make {dish_name} (food recipe)?")
-    # safety_response = parse_safety_response(llm_response)
-    # if safety_response['safety_status'] == 'UNSAFE':
-    #     return [f"https://www.youtube.com/embed/{404}"] # default unvalid link
+    llm_response = check_incoming_query(f"{dish_name} (food recipe)?")
+    safety_response = parse_safety_response(llm_response)
+    if safety_response['safety_status'] == 'UNSAFE':
+        return [f"https://www.youtube.com/embed/{404}"] # default unvalid link
 
     youtube = build('youtube', 'v3', developerKey=YOUTUBE_DATA_API)
-    search_params = {'q': dish_name + " food recipe", 'part': 'snippet', 'maxResults': 5, 'type': 'video'}
+    search_params = {'q': dish_name + " food recipe", 'part': 'snippet', 'maxResults': 1, 'type': 'video'}
     search_response = youtube.search().list(**search_params).execute()
     video_ids = [item['id']['videoId'] for item in search_response['items']]
     return [f"https://www.youtube.com/embed/{video_id}" for video_id in video_ids]
+
 
 def generate_embed_html(video_ids):
     """Generate HTML embed code for YouTube videos, displayed two per row."""
@@ -155,7 +145,7 @@ def generate_embed_html(video_ids):
     for video_id in video_ids:
         html_content += f'''
         <div style="flex: 1 1 50%; padding: 2px;">
-            <iframe width="100%" height="157" src="{video_id}" frameborder="0"
+            <iframe width="100%" height="315" src="{video_id}" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
         </div>
@@ -163,6 +153,7 @@ def generate_embed_html(video_ids):
 
     html_content += "</div>"
     return html_content
+
 
 
 def get_recipe(dish_name):
