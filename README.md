@@ -124,6 +124,7 @@ Betterchef-AI-Powered-Cooking-App/
 │   ├── datamanagement.py     # For downloading and processing data to put in the database.
 │   ├── database.py           # Database-related classes and functions.
 │   └── utils.py              # Utility functions and classes.
+│   └── policy.py              # Defining our policy for responsible AI
 │
 ├── diagrams/                 # Diagrams, flowcharts, and other graphical representations of the app workflow.
 │   └── workflow.png
