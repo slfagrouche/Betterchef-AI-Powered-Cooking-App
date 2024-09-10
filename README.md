@@ -83,7 +83,7 @@ This example highlights the differences between ChatGPT and the RAG model ("Bett
 ## Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/Betterchef-AI-Powered-Cooking-App.git
+    git clone https://github.com/slfagrouche/Betterchef-AI-Powered-Cooking-App.git
     ```
 2. Navigate to the project directory:
     ```sh
